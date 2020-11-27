@@ -4,18 +4,20 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <form action="{{ route('post.store') }}" method="POST">
-                @csrf
-                <div class="form-group row">
-                    <label for="post" class="col-md-1 col-form-label">{{ __('post') }}</label>
-                    <div class="col-md-8 input-group-text">
-                        <input id="post" type="text" class="form-control" name="post" value="{{ old('post') }}">
+            @auth
+                <form action="{{ route('post.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group row">
+                        <label for="post" class="col-md-1 col-form-label">{{ __('post') }}</label>
+                        <div class="col-md-8 input-group-text">
+                            <input id="post" type="text" class="form-control" name="post" value="{{ old('post') }}">
+                        </div>
+                        <button type="submit" class="col-md-1 ml-3 btn btn-primary" name="action">
+                            {{ __('send') }}
+                        </button>
                     </div>
-                    <button type="submit" class="col-md-1 ml-3 btn btn-primary" name="action">
-                        {{ __('send') }}
-                    </button>
-                </div>
-            </form>
+                </form>
+            @endauth
             <div class="card">
                 <div class="card-header">post Index</div>
 
@@ -56,7 +58,11 @@
                                         <tr>
                                             <td>{{ $post->id }}</td>
                                             <td>{{ $post->post }}</td>
-                                            <td>{{ $post->user_id }}</td>
+                                            @if(Auth::id() == $post->user_id)
+                                                <td><a href="{{ route('post.edit', $post->id) }}">{{ $post->user_id }}</a></td>
+                                            @else
+                                            <td><a href="{{ route('post.show', $post->id) }}">{{ $post->user_id }}</a></td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 @endif

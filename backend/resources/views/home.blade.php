@@ -15,6 +15,7 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                    <a class='text-right' href='/post'>{{ __('Go to Post')}}</a>
                 </div>
             </div>
         </div>

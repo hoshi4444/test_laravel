@@ -22,5 +22,3 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/post', 'App\Http\Controllers\PostController');
-// Route::get('/post', [App\Http\Controllers\PostController::class, 'index'])->name('post');
-// Route::post('/post', [App\Http\Controllers\PostController::class, 'store'])->name('store');

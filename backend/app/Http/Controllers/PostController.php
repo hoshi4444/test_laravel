@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = \App\Models\Post::all();
+        $posts = Post::all()->sortByDesc("id");
         return view('post/index', compact('posts'));
     }
 
@@ -52,7 +52,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $posts = Post::find($id);
+        return view('post.show', compact('posts'));
     }
 
     /**
@@ -63,7 +64,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $posts = Post::find($id);
+        return view('post.edit', compact('posts'));
     }
 
     /**
@@ -75,7 +77,14 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->action === 'back') {
+            return redirect()->route('post.index');
+        } else {
+            $post = Post::find($id);
+            $post->post = $request->post;
+            $post->save();
+            return redirect()->route('post.index');
+        }
     }
 
     /**
@@ -86,6 +95,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $posts = Post::find($id);
+        $posts->delete();
+        return redirect()->route('post.index');
     }
 }
