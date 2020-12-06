@@ -5,6 +5,19 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             @auth
+                <form action="{{ url('/search') }}" method="POST">
+                    @csrf
+                    {{method_field('get')}}
+                    <div class="form-group row">
+                        <label for="post" class="col-md-1 col-form-label">{{ __('search') }}</label>
+                        <div class="col-md-8 input-group-text">
+                            <input id="post" type="text" class="form-control" name="post" value="{{ old('post') }}">
+                        </div>
+                        <button type="submit" class="col-md-1 ml-3 btn btn-primary" name="action">
+                            {{ __('send') }}
+                        </button>
+                    </div>
+                </form>
                 <form action="{{ route('post.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">

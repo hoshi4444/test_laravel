@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \App\Models\Post;
+use Log;
 
 class PostController extends Controller
 {
@@ -98,5 +99,13 @@ class PostController extends Controller
         $posts = Post::find($id);
         $posts->delete();
         return redirect()->route('post.index');
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->post;
+
+        $posts = Post::where('post','like', '%' .$keyword. '%')->get()->sortByDesc("id");
+        return view('/search', compact('posts'));
     }
 }
