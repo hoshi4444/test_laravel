@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->action([PostController::class, 'index']);
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::resource('/post', 'App\Http\Controllers\PostController');
-Route::get('/search', [App\Http\Controllers\PostController::class, 'search'])->name('search');
+Route::get('/search', [PostController::class, 'search'])->name('search');
